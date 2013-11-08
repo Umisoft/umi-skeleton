@@ -1,6 +1,7 @@
 {
     "name": "umi/skeleton",
     "description": "Demo application for UMI.Framework",
+    "license": "BSD-3-Clause",
     "type": "project",
     "autoload": {
         "psr-0": {
