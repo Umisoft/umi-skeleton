@@ -1,0 +1,13 @@
+{
+    "name": "umi/skeleton",
+    "description": "Demo application for UMI.Framework",
+    "type": "project",
+    "autoload": {
+        "psr-0": {
+            "application\\": ""
+        }
+    },
+    "require": {
+        "umi/framework": "dev-master"
+    }
+}

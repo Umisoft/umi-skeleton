@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width"/>
+
+    <title>Welcome to UMI.Framework | Main</title>
+
+    <?php
+        echo $this->headStyle()
+            ->prependFile('/css/foundation.min.css')
+            ->prependFile('/css/normalize.min.css');
+    ?>
+
+    <script src="/js/vendor/custom.modernizr.js"></script>
+</head>
+<body>
+<div class="row">
+    <div class="large-12 columns">
+        <div class="row">
+            <div class="large-12 columns">
+
+                <nav class="top-bar">
+                    <ul class="title-area">
+                        <li class="name">
+                            <h1><a href="/">UMI.Framework</a></h1>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+        <div class="row" style="margin-top: 25px"><?php
+            echo $content;
+        ?></div>
+
+        <footer class="row">
+            <div class="large-12 columns">
+                <hr/>
+                <div class="row">
+                    <div class="large-6 columns">
+                        <p>&copy; Copyright no one at all. Go to town.</p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+</div>
+<?php
+    echo $this->headScript()
+        ->prependScript(
+            '$(document).foundation();'
+        )
+        ->prependFile('/js/foundation.min.js')
+        ->prependFile('/js/vendor/jquery.js');
+?>
+</body>
+</html>

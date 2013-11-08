@@ -1,0 +1,56 @@
+<?php /** @var \Exception $e */ ?>
+<div class="large-12 columns">
+    <h1>An error occurred</h1>
+
+    <h2><?= $e->getMessage(); ?></h2>
+
+    <hr/>
+    <h2>Additional information:</h2>
+
+    <h3><?= get_class($e); ?></h3>
+    <dl>
+        <dt>File:</dt>
+        <dd>
+            <pre class="prettyprint linenums"><?= $e->getFile() ?>:<?= $e->getLine() ?></pre>
+        </dd>
+        <dt>Message:</dt>
+        <dd>
+            <pre class="prettyprint linenums"><?= $e->getMessage() ?></pre>
+        </dd>
+        <dt>Stack trace:</dt>
+        <dd>
+            <pre class="prettyprint linenums"><?= $e->getTraceAsString() ?></pre>
+        </dd>
+    </dl>
+    <?php
+        $e = $e->getPrevious();
+
+        if ($e) :
+            ?>
+            <hr/>
+            <h2>Previous exceptions:</h2>
+            <ul class="unstyled">
+                <?php while ($e) : ?>
+                    <li>
+                        <h3><?= get_class($e); ?></h3>
+                        <dl>
+                            <dt>File:</dt>
+                            <dd>
+                                <pre class="prettyprint linenums"><?= $e->getFile() ?>:<?= $e->getLine() ?></pre>
+                            </dd>
+                            <dt>Message:</dt>
+                            <dd>
+                                <pre class="prettyprint linenums"><?= $e->getMessage(); ?></pre>
+                            </dd>
+                            <dt>Stack trace:</dt>
+                            <dd>
+                                <pre class="prettyprint linenums"><?= $e->getTraceAsString() ?></pre>
+                            </dd>
+                        </dl>
+                    </li>
+                    <?php
+                    $e = $e->getPrevious();
+                endwhile;
+                ?></ul>
+        <?php endif; ?>
+</div>
