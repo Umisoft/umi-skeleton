@@ -1,6 +1,6 @@
 <?php
-    namespace application\config;
+namespace application\config;
 
-    return [
-        'application' => '{#lazy:~/application/component.config.php}'
-    ];
+return [
+    'application' => '{#lazy:~/application/component.config.php}'
+];

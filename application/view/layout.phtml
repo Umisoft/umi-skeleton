@@ -1,15 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width"/>
 
-    <title>Welcome to UMI.Framework | Main</title>
+    <title><?= $this->translate("Welcome to UMI.Framework") ?> | <?= $this->translate("Home") ?></title>
 
     <?php
-        echo $this->headStyle()
-            ->prependFile('/css/foundation.min.css')
-            ->prependFile('/css/normalize.min.css');
+    echo $this->headStyle()
+        ->prependFile('/css/foundation.min.css')
+        ->prependFile('/css/normalize.min.css');
     ?>
 
     <script src="/js/vendor/custom.modernizr.js"></script>
@@ -32,14 +32,14 @@
 
         <div class="row" style="margin-top: 25px"><?php
             echo $content;
-        ?></div>
+            ?></div>
 
         <footer class="row">
             <div class="large-12 columns">
                 <hr/>
                 <div class="row">
-                    <div class="large-6 columns">
-                        <p>&copy; Copyright no one at all. Go to town.</p>
+                    <div class="small-offset-6 small-6 columns text-right">
+                        <small><?= $this->translate("&copy; Umisoft ltd. 2007-2013") ?></small>
                     </div>
                 </div>
             </div>
@@ -48,12 +48,12 @@
     </div>
 </div>
 <?php
-    echo $this->headScript()
-        ->prependScript(
-            '$(document).foundation();'
-        )
-        ->prependFile('/js/foundation.min.js')
-        ->prependFile('/js/vendor/jquery.js');
+echo $this->headScript()
+    ->prependScript(
+        '$(document).foundation();'
+    )
+    ->prependFile('/js/foundation.min.js')
+    ->prependFile('/js/vendor/jquery.js');
 ?>
 </body>
 </html>
