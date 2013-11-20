@@ -7,4 +7,4 @@ if (!file_exists($loader)) {
     );
 }
 
-require $loader;
+return require $loader;

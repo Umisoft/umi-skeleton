@@ -10,4 +10,4 @@ if (!is_readable($bootstrapConfigFile)) {
 
 require $appDirectory . '/Bootstrap.php';
 $bootstrap = new Bootstrap(require $bootstrapConfigFile);
-$bootstrap->run();
+$bootstrap->runApplication();
