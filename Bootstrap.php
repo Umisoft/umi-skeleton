@@ -1,10 +1,9 @@
 <?php
-use Psr\Log\LoggerInterface;
 use umi\config\entity\IConfig;
 use umi\config\io\IConfigIO;
-use umi\hmvc\component\IComponent;
 use umi\hmvc\component\IComponentFactory;
 use umi\hmvc\component\request\IComponentRequestFactory;
+use umi\http\request\IRequest;
 use umi\toolkit\IToolkit;
 use umi\toolkit\Toolkit;
 
@@ -15,65 +14,61 @@ class Bootstrap
 {
     const OPTION_TOOLKIT = 'toolkit';
     const OPTION_SETTINGS = 'settings';
-    /**
-     * Символическое имя конфигурационного файла.
-     */
+
+    /** Символическое имя конфигурационного файла. */
     const GENERAL_CONFIG = '~/general.php';
     /**
      * @var IToolkit $tools
      */
     protected $toolkit;
     /**
-     * @var IComponent $application
-     */
-    protected $application;
-    /**
      * @var IConfig $config
      */
-    protected $bootConfig;
-    /**
-     * @var IConfig $config
-     */
-    protected $generalConfig;
-    /**
-     * @var LoggerInterface $logger
-     */
-    protected $logger;
+    protected $configuration;
 
     /**
      * Конструктор
-     * @param array $bootConfig конфигурация
+     * @param array $configuration boot-конфигурация
      */
-    public function __construct(array $bootConfig)
+    public function __construct(array $configuration)
     {
-        $this->bootConfig = $bootConfig;
+        $this->initToolkit($configuration);
+    }
 
-        $this->configureToolkit();
+    /**
+     * Создает компонент приложения.
+     */
+    public function createApplication()
+    {
+        // todo: fix toArray
+        $appConfig = $this->configuration->get('application')->toArray();
 
-        $this->createApplication();
+        /** @var IComponentFactory $componentFactory */
+        $componentFactory = $this->toolkit->getService('umi\hmvc\component\IComponentFactory');
+        return $componentFactory->createComponent($appConfig);
     }
 
     /**
      * Запускает приложение.
      */
-    public function run()
+    public function runApplication()
     {
+        $application = $this->createApplication();
+
         try {
-            /** @var IComponentRequestFactory $requestFactory */
-            $requestFactory = $this->toolkit->getService('umi\hmvc\component\request\IComponentRequestFactory');
-            $request = $requestFactory->createComponentRequest($this->getUrl());
-
-            $response = $this->application
-                ->execute($request);
-
-            $response->send();
+            $application
+                ->execute($this->getComponentRequest())
+                    ->send();
         } catch (\Exception $e) {
-            throw new ErrorException('Unhandled exception thrown.', 0, 1, __FILE__, __LINE__, $e);
+            throw new ErrorException(
+                'Unhandled exception thrown.', 0, 1, __FILE__, __LINE__, $e
+            );
         }
     }
 
     /**
      * Возвращает toolkit.
+     *
      * @return IToolkit
      */
     public function getToolkit()
@@ -84,54 +79,41 @@ class Bootstrap
     /**
      * Загружает и регистрирует конфигурацию тулбокса.
      */
-    protected function configureToolkit()
+    protected function initToolkit($bootConfig)
     {
         $this->toolkit = new Toolkit();
 
-        if (isset($this->bootConfig[self::OPTION_TOOLKIT])) {
-            $this->toolkit->registerToolboxes($this->bootConfig[self::OPTION_TOOLKIT]);
+        if (isset($bootConfig[self::OPTION_TOOLKIT])) {
+            $this->toolkit->registerToolboxes($bootConfig[self::OPTION_TOOLKIT]);
         }
 
-        if (isset($this->bootConfig[self::OPTION_SETTINGS])) {
-            $this->toolkit->setSettings($this->bootConfig[self::OPTION_SETTINGS]);
+        if (isset($bootConfig[self::OPTION_SETTINGS])) {
+            $this->toolkit->setSettings($bootConfig[self::OPTION_SETTINGS]);
         }
 
         /**
          * @var IConfigIO $configIO
          */
         $configIO = $this->toolkit->getService('umi\config\io\IConfigIO');
-        $this->generalConfig = $configIO->read(self::GENERAL_CONFIG);
 
-        $this->toolkit->setSettings($this->generalConfig['toolkit'] ? : []);
+        $this->configuration = $configIO->read(self::GENERAL_CONFIG);
+        $this->toolkit->setSettings($this->configuration['toolkit'] ? : []);
     }
 
-    /**
-     * Создает компонент приложения.
-     */
-    protected function createApplication()
+    protected function getComponentRequest()
     {
-        // todo: fix toArray
-        $appConfig = $this->generalConfig->get('application')
-            ->toArray();
+        /** @var IComponentRequestFactory $componentRequestFactory */
+        $componentRequestFactory = $this->toolkit->getService('umi\hmvc\component\request\IComponentRequestFactory');
 
-        /** @var IComponentFactory $componentFactory */
-        $componentFactory = $this->toolkit->getService('umi\hmvc\component\IComponentFactory');
-        $this->application = $componentFactory->createComponent($appConfig);
-    }
-
-    /**
-     * Получает URL запроса без параметров.
-     * @return string
-     */
-    protected function getUrl()
-    {
+        /**
+         * @var IRequest $request
+         */
         $request = $this->toolkit->getService('umi\http\request\IRequest');
+        $requestUrl = parse_url($request->getRequestUri(), PHP_URL_PATH);
+        $requestUrl = substr($requestUrl, -1) == '/' ? substr($requestUrl, 0, -1) : $requestUrl;
 
-        $url = parse_url(
-            $request->getRequestUri(),
-            PHP_URL_PATH
+        return $componentRequestFactory->createComponentRequest(
+            $requestUrl
         );
-
-        return substr($url, -1) == '/' ? substr($url, 0, -1) : $url;
     }
 }
