@@ -1,6 +1,8 @@
 Скелетон приложение для UMI.Framework
 ======
 
+Branch **master** [![Build Status](https://travis-ci.org/Umisoft/umi-skeleton.png?branch=master)](https://travis-ci.org/Umisoft/umi-skeleton)
+
 Скелетон приложение является примером приложения для UMI.Framework и служит каркасом для
 основных типов web приложений.
 В скелетон приложении реализовано:
