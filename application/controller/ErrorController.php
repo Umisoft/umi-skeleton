@@ -2,7 +2,7 @@
 namespace application\controller;
 
 use umi\hmvc\component\request\IComponentRequest;
-use umi\hmvc\controller\result\IControllerResult;
+use umi\hmvc\component\response\IComponentResponse;
 use umi\hmvc\controller\type\BaseController;
 use umi\hmvc\exception\http\HttpNotFound;
 
@@ -32,7 +32,7 @@ class ErrorController extends BaseController
             return $this->error404($request);
         }
 
-        return $this->createControllerResult(
+        return $this->createDisplayResponse(
             'error',
             [
                 'e' => $this->exception
@@ -44,11 +44,11 @@ class ErrorController extends BaseController
     /**
      * Отображает 404 ошибку.
      * @param IComponentRequest $request
-     * @return IControllerResult
+     * @return IComponentResponse
      */
     public function error404(IComponentRequest $request)
     {
-        return $this->createControllerResult(
+        return $this->createDisplayResponse(
             'error404',
             [
                 'e' => $this->exception

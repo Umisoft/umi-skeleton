@@ -33,9 +33,7 @@ return [
             ]
         ],
         I18nTools::NAME => [
-            'translator' => [
-                'dictionaries' => require('i18n.php')
-            ]
+            'translatorDictionaries' => require('i18n.php')
         ]
     ]
 ];

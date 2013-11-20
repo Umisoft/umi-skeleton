@@ -2,6 +2,8 @@
 namespace application\controller;
 
 use umi\hmvc\component\request\IComponentRequest;
+use umi\hmvc\component\response\IComponentResponse;
+use umi\hmvc\component\response\model\DisplayModel;
 use umi\hmvc\controller\type\BaseController;
 
 /**
@@ -11,17 +13,17 @@ use umi\hmvc\controller\type\BaseController;
 class LayoutController extends BaseController
 {
     /**
-     * @var string $content содержимое страницы
+     * @var IComponentResponse $response содержимое страницы
      */
-    public $content;
+    protected $response;
 
     /**
      * Конструктор.
-     * @param string $content
+     * @param IComponentResponse $response
      */
-    public function __construct($content)
+    public function __construct(IComponentResponse $response)
     {
-        $this->content = $content;
+        $this->response = $response;
     }
 
     /**
@@ -29,11 +31,9 @@ class LayoutController extends BaseController
      */
     public function __invoke(IComponentRequest $request)
     {
-        return $this->createControllerResult(
-            'layout',
-            [
-                'content' => $this->content
-            ]
-        );
+        return $this->response
+            ->setContent(
+                new DisplayModel('layout', ['content' => $this->response->getContent()])
+            );
     }
 }
