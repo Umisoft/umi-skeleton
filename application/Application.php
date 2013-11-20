@@ -4,13 +4,8 @@ namespace application;
 use umi\hmvc\component\Component;
 use umi\hmvc\component\request\IComponentRequest;
 use umi\hmvc\component\response\IComponentResponse;
-use umi\hmvc\component\response\model\DisplayModel;
 use umi\hmvc\context\Context;
-use umi\hmvc\exception\UnexpectedValueException;
 use umi\i18n\ILocalesService;
-use umi\session\ISessionAware;
-use umi\session\TSessionAware;
-use umi\toolkit\exception\RuntimeException;
 use umi\toolkit\IToolkitAware;
 use umi\toolkit\TToolkitAware;
 
