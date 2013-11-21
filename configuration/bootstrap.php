@@ -23,7 +23,7 @@ return [
         require($libraryPath . '/templating/toolbox/config.php'),
     ],
     /**
-     * Настройки иснтрументов.
+     * Настройки инструментов.
      */
     Bootstrap::OPTION_SETTINGS => [
         ConfigTools::NAME       => [
