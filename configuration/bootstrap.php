@@ -12,7 +12,7 @@ $libraryPath = $vendorDirectory . '/umi/framework/library/umi';
 
 return [
     /**
-     * Конфигурация для регистрации наборов инструментов.
+     * Используемый набор инструментов.
      */
     Bootstrap::OPTION_TOOLKIT  => [
         require($libraryPath . '/i18n/toolbox/config.php'),
@@ -23,7 +23,7 @@ return [
         require($libraryPath . '/templating/toolbox/config.php'),
     ],
     /**
-     * Конфигурация встроенных иснтрументов
+     * Настройки иснтрументов.
      */
     Bootstrap::OPTION_SETTINGS => [
         ConfigTools::NAME       => [
