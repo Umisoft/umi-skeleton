@@ -5,7 +5,6 @@ use umi\hmvc\controller\type\StaticPageController;
 
 /**
  * Контроллер Index. Выводит статическую главную страницу.
- * @package App\Main
  */
 class IndexController extends StaticPageController
 {

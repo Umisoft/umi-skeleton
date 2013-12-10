@@ -11,7 +11,6 @@ use umi\toolkit\TToolkitAware;
 
 /**
  * MVC Application.
- * @package App
  */
 class Application extends Component implements IToolkitAware
 {

@@ -8,7 +8,6 @@ use umi\hmvc\exception\http\HttpNotFound;
 
 /**
  * Контроллер ошибок компонента.
- * @package App
  */
 class ErrorController extends BaseController
 {

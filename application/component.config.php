@@ -16,11 +16,6 @@ return [
         'index'                        => __NAMESPACE__ . '\controller\IndexController',
     ],
 
-    // зарегистрированные модели
-    IComponent::OPTION_MODELS      => [
-        'user' => 'app\components\auth\model\UserModel'
-    ],
-
     // настройки шаблонизатора
     IComponent::OPTION_VIEW        => [
         // тип шаблонизатора
@@ -34,7 +29,7 @@ return [
     IComponent::OPTION_ROUTES      => [
         // базовый маршрут внутри компонента
         'home' => [
-            // тип маршрута - на основе simple-выражений
+            // тип маршрута - простой расширеный
             'type'     => IRouteFactory::ROUTE_EXTENDED,
             // путь(маска) маршрута
             'route'    => '/{lang}',

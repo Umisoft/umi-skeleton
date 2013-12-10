@@ -8,7 +8,6 @@ use umi\hmvc\controller\type\BaseController;
 
 /**
  * Контроллер сетки приложения.
- * @package App
  */
 class LayoutController extends BaseController
 {
