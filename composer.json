@@ -10,6 +10,6 @@
         }
     },
     "require": {
-        "umi/framework": "~1.0.0@RC"
+        "umi/framework": "1.*@RC"
     }
 }
